@@ -1,12 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Project</title>
-  <p>This is a Example of file opening</p>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Image</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        .full-screen-image {
+            width: 100%;
+            height: auto; 
+        }
+    </style>
+    
 </head>
 <body>
-  
+    <img src="images/drawing.jpg" alt="Full Screen Image" class="full-screen-image">
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <form id="itemForm">
+      <label for="serialNumber">Serial No:</label>
+      <input type="text" id="serialNumber" placeholder="Enter Serial No"><br>
+    
+      <label for="itemName">Item Name:</label>
+      <input type="text" id="itemName" placeholder="Enter Item Name"><br>
+    
+      <label for="itemRate">Rate:</label>
+      <input type="number" id="itemRate" placeholder="Enter Rate"><br>
+    
+      <button type="button" onclick="addItem()">Add Item</button>
+    </form>
+
+    
+    <h3>Item List:</h3>
+    <ul id="itemList"></ul>
+    
+    <h3>Search Item:</h3>
+<input type="text" id="searchQuery" placeholder="Enter Serial No or Item Name">
+<button type="button" onclick="searchItem()">Search</button>
+
+<h4>Search Result:</h4>
+<p id="searchResult"></p>
+
+<script>
+
+  let items = [];  // This array will hold the items
+
+// Function to add item
+function addItem() {
+    // Get values from the input fields
+    let serialNumber = document.getElementById("serialNumber").value;
+    let itemName = document.getElementById("itemName").value;
+    let itemRate = document.getElementById("itemRate").value;
+
+    // Create an object to represent the item
+    let newItem = {
+        serialNumber: serialNumber,
+        itemName: itemName,
+        itemRate: itemRate
+    };
+
+    // Add the item to the array
+    items.push(newItem);
+
+    // Display the item in the list
+    displayItems();
+}
+
+// Function to display items
+function displayItems() {
+    let itemList = document.getElementById("itemList");
+    itemList.innerHTML = "";  // Clear the list before displaying
+
+    // Loop through the items and display each one
+    items.forEach(function(item, index) {
+        itemList.innerHTML += `<li>Serial No: ${item.serialNumber}, Name: ${item.itemName}, Rate: ${item.itemRate}</li>`;
+    });
+}
+
+// Function to search item
+function searchItem() {
+    let searchQuery = document.getElementById("searchQuery").value.toLowerCase();
+    let result = document.getElementById("searchResult");
+    let foundItem = items.find(item => 
+        item.serialNumber.toLowerCase() === searchQuery || 
+        item.itemName.toLowerCase() === searchQuery
+    );
+
+    // Display the result
+    if (foundItem) {
+        result.textContent = `Found - Serial No: ${foundItem.serialNumber}, Name: ${foundItem.itemName}, Rate: ${foundItem.itemRate}`;
+    } else {
+        result.textContent = "Item not found.";
+    }
+}
+
+</script>
+
+
+
+    
 </body>
 </html>
